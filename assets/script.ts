@@ -1,4 +1,22 @@
 type Lang = 'hi' | 'en' | 'both'
+type VoicePrefs = { rate: number; pitch: number; voiceHi?: string; voiceEn?: string }
+
+const defaultPrefs: VoicePrefs = { rate: 0.95, pitch: 1 }
+let voicesCache: SpeechSynthesisVoice[] = []
+
+function getPrefs(): VoicePrefs {
+  try {
+    const raw = localStorage.getItem('tts:prefs')
+    if (!raw) return { ...defaultPrefs }
+    const p = JSON.parse(raw) as VoicePrefs
+    return { ...defaultPrefs, ...p }
+  } catch { return { ...defaultPrefs } }
+}
+
+function setPrefs(p: Partial<VoicePrefs>) {
+  const merged = { ...getPrefs(), ...p }
+  localStorage.setItem('tts:prefs', JSON.stringify(merged))
+}
 
 function setLang(lang: Lang) {
   const buttons = document.querySelectorAll<HTMLButtonElement>('.lang-btn')
@@ -21,17 +39,34 @@ function sanitizeText(t: string): string {
   return t.replace(/[\u0000-\u001F\u007F]/g, ' ').trim()
 }
 
-async function speak(text: string, langHint: Lang) {
+async function webSpeechSpeak(text: string, langHint: Lang) {
+  const prefs = getPrefs()
   const utter = new SpeechSynthesisUtterance(sanitizeText(text))
   let langCode = langHint === 'en' ? 'en-IN' : 'hi-IN'
   if (langHint === 'both') langCode = 'hi-IN'
-  const voices = speechSynthesis.getVoices()
-  const match = voices.find(v => v.lang.toLowerCase().startsWith(langCode.toLowerCase()))
+  const voices = voicesCache.length ? voicesCache : speechSynthesis.getVoices()
+  const desiredName = langHint === 'en' ? prefs.voiceEn : prefs.voiceHi
+  let match: SpeechSynthesisVoice | undefined
+  if (desiredName) match = voices.find(v => v.name === desiredName)
+  if (!match) match = voices.find(v => v.lang.toLowerCase().startsWith(langCode.toLowerCase()))
   if (match) utter.voice = match
   utter.lang = match?.lang || langCode
-  utter.rate = 0.95
+  utter.rate = Math.min(1.4, Math.max(0.6, prefs.rate))
+  utter.pitch = Math.min(1.3, Math.max(0.7, prefs.pitch))
   speechSynthesis.cancel()
   speechSynthesis.speak(utter)
+}
+
+async function remoteSpeak(text: string, langHint: Lang) {
+  try {
+    const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, lang: langHint }) })
+    if (!res.ok) return false
+    const blob = await res.blob()
+    const url = URL.createObjectURL(blob)
+    const audio = new Audio(url)
+    await audio.play()
+    return true
+  } catch { return false }
 }
 
 function initTTS() {
@@ -42,7 +77,7 @@ function initTTS() {
       const langSel = (currentLangBtn?.dataset.langSelect || 'hi') as Lang
       const block = langSel === 'en' ? card?.querySelector<HTMLElement>('.content[data-lang="en"]') : card?.querySelector<HTMLElement>('.content[data-lang="hi"]')
       const text = block?.innerText || card?.innerText || ''
-      speak(text, langSel)
+      remoteSpeak(text, langSel).then(done => { if (!done) webSpeechSpeak(text, langSel) })
     })
   })
 }
@@ -95,9 +130,75 @@ function initSearch() {
     cards.forEach(c => {
       const text = (c.innerText || '').toLowerCase()
       c.style.display = q && !text.includes(q) ? 'none' : ''
+      const titles = Array.from(c.querySelectorAll<HTMLElement>('.title'))
+      titles.forEach(t => {
+        const orig = t.dataset.orig || t.textContent || ''
+        if (!t.dataset.orig) t.dataset.orig = orig
+        if (!q) { t.textContent = orig; return }
+        const idx = orig.toLowerCase().indexOf(q)
+        if (idx >= 0) {
+          const before = orig.slice(0, idx)
+          const match = orig.slice(idx, idx + q.length)
+          const after = orig.slice(idx + q.length)
+          t.innerHTML = `${before}<mark>${match}</mark>${after}`
+        } else {
+          t.textContent = orig
+        }
+      })
     })
   }
   if (input) { input.addEventListener('input', debounce(run, 150)); run() }
+}
+
+function populateVoices() {
+  voicesCache = speechSynthesis.getVoices()
+  const hiSel = document.getElementById('voiceHi') as HTMLSelectElement | null
+  const enSel = document.getElementById('voiceEn') as HTMLSelectElement | null
+  if (!hiSel || !enSel) return
+  const prefs = getPrefs()
+  const hiVoices = voicesCache.filter(v => v.lang.toLowerCase().startsWith('hi'))
+  const enVoices = voicesCache.filter(v => v.lang.toLowerCase().startsWith('en'))
+  const fill = (sel: HTMLSelectElement, list: SpeechSynthesisVoice[], preferred?: string) => {
+    sel.innerHTML = ''
+    list.forEach(v => {
+      const opt = document.createElement('option')
+      opt.value = v.name
+      opt.textContent = `${v.name} (${v.lang})`
+      if (preferred && v.name === preferred) opt.selected = true
+      sel.appendChild(opt)
+    })
+  }
+  fill(hiSel, hiVoices, prefs.voiceHi)
+  fill(enSel, enVoices, prefs.voiceEn)
+}
+
+function initSettings() {
+  const toggle = document.querySelector<HTMLButtonElement>('.settings-toggle')
+  const panel = document.getElementById('settingsPanel') as HTMLElement | null
+  const rate = document.getElementById('rate') as HTMLInputElement | null
+  const pitch = document.getElementById('pitch') as HTMLInputElement | null
+  const rateVal = document.getElementById('rateVal') as HTMLElement | null
+  const pitchVal = document.getElementById('pitchVal') as HTMLElement | null
+  const voiceHi = document.getElementById('voiceHi') as HTMLSelectElement | null
+  const voiceEn = document.getElementById('voiceEn') as HTMLSelectElement | null
+  const testHi = document.getElementById('testHi') as HTMLButtonElement | null
+  const testEn = document.getElementById('testEn') as HTMLButtonElement | null
+  const prefs = getPrefs()
+  if (rate && rateVal) { rate.value = String(prefs.rate); rateVal.textContent = String(prefs.rate) }
+  if (pitch && pitchVal) { pitch.value = String(prefs.pitch); pitchVal.textContent = String(prefs.pitch) }
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true'
+    toggle.setAttribute('aria-expanded', String(!expanded))
+    if (panel) panel.hidden = expanded
+  })
+  rate?.addEventListener('input', () => { setPrefs({ rate: Number(rate.value) }); if (rateVal) rateVal.textContent = String(rate.value) })
+  pitch?.addEventListener('input', () => { setPrefs({ pitch: Number(pitch.value) }); if (pitchVal) pitchVal.textContent = String(pitch.value) })
+  voiceHi?.addEventListener('change', () => setPrefs({ voiceHi: voiceHi.value }))
+  voiceEn?.addEventListener('change', () => setPrefs({ voiceEn: voiceEn.value }))
+  testHi?.addEventListener('click', () => webSpeechSpeak('नमस्ते, यह परीक्षण है।', 'hi'))
+  testEn?.addEventListener('click', () => webSpeechSpeak('Hello, this is a test.', 'en'))
+  populateVoices()
+  if ('onvoiceschanged' in speechSynthesis) speechSynthesis.onvoiceschanged = populateVoices
 }
 
 function init() {
@@ -105,6 +206,7 @@ function init() {
   initTTS()
   initMedia()
   initSearch()
+  initSettings()
 }
 
 if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init) } else { init() }

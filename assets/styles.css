@@ -34,6 +34,7 @@ body { font-family: 'Noto Sans Devanagari', 'Noto Serif', serif; line-height: 1.
 .lang-toggle { display: flex; gap: 0.5rem; }
 .lang-btn { padding: 0.5rem 0.8rem; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; }
 .lang-btn[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+.settings-toggle { padding: 0.5rem 0.8rem; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px; }
 
 .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
@@ -53,6 +54,12 @@ body { font-family: 'Noto Sans Devanagari', 'Noto Serif', serif; line-height: 1.
 .issues-links { margin-top: 1rem; background: #fff; border: 1px solid #ddd; padding: 0.75rem; }
 .issues-links h3 { margin: 0 0 0.5rem; }
 .issues-links ul { margin: 0; padding-left: 1rem; }
+
+.settings-panel { background: #fff; border: 1px solid #ddd; padding: 0.75rem; margin-bottom: 1rem; display: grid; gap: 0.6rem; }
+.settings-row { display: grid; grid-template-columns: 140px 1fr auto; align-items: center; gap: 0.5rem; }
+.settings-row label { color: var(--muted); }
+.settings-actions { display: flex; gap: 0.5rem; }
+.settings-actions button { padding: 0.4rem 0.8rem; border: 1px solid #ccc; background: #fff; border-radius: 4px; cursor: pointer; }
 
 .site-footer { border-top: 4px double #333; padding: 1rem; background: #fff; text-align: center; }
 .footer-links { display: flex; gap: 1rem; justify-content: center; margin-bottom: 0.5rem; }
