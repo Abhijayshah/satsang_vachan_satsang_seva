@@ -59,11 +59,13 @@ async function webSpeechSpeak(text: string, langHint: Lang) {
 
 async function remoteSpeak(text: string, langHint: Lang) {
   try {
-    const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, lang: langHint }) })
+    const base = (window as any).__API_BASE || ''
+    const url = base ? `${base.replace(/\/$/, '')}/api/tts` : '/api/tts'
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, lang: langHint }) })
     if (!res.ok) return false
     const blob = await res.blob()
-    const url = URL.createObjectURL(blob)
-    const audio = new Audio(url)
+    const objUrl = URL.createObjectURL(blob)
+    const audio = new Audio(objUrl)
     await audio.play()
     return true
   } catch { return false }
@@ -72,7 +74,7 @@ async function remoteSpeak(text: string, langHint: Lang) {
 function initTTS() {
   document.querySelectorAll<HTMLButtonElement>('.tts-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const card = btn.closest('.card')
+      const card = btn.closest('.card') as HTMLElement | null
       const currentLangBtn = document.querySelector<HTMLButtonElement>('.lang-btn[aria-pressed="true"]')
       const langSel = (currentLangBtn?.dataset.langSelect || 'hi') as Lang
       const block = langSel === 'en' ? card?.querySelector<HTMLElement>('.content[data-lang="en"]') : card?.querySelector<HTMLElement>('.content[data-lang="hi"]')
@@ -210,3 +212,4 @@ function init() {
 }
 
 if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init) } else { init() }
+export {}
