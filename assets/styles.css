@@ -152,18 +152,13 @@ body {
 
 /* Navigation System (Mobile First) */
 .site-nav { 
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(17, 24, 39, 0.95); 
-  backdrop-filter: blur(var(--backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--backdrop-blur));
-  border-top: 1px solid var(--glass-border);
-  padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom)) 0.5rem; /* Safe area for iPhone X+ */
+  /* Moved to top naturally as it is inside header */
+  /* position: fixed; bottom: 0; removed to allow natural top flow */
+  background: transparent; 
+  /* backdrop-filter handled by header */
+  padding: 0.5rem 0;
   z-index: 1000;
-  display: block; /* Reset flex from previous */
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2); /* Elevated look */
+  display: block;
 }
 
 .nav-list {
@@ -214,24 +209,28 @@ body {
 
 .chevron-icon { display: none; } /* Hide chevron on mobile nav */
 
-/* Submenu (Mobile: Expands Upwards) */
+/* Submenu (Mobile: Expands Downwards) */
 .submenu {
   position: absolute;
-  bottom: 100%;
+  top: 100%; /* Changed from bottom: 100% to top: 100% */
+  bottom: auto;
   left: 50%;
-  transform: translateX(-50%) translateY(10px);
+  transform: translateX(-50%) translateY(-10px);
   width: 200px;
   background: rgba(17, 24, 39, 0.98);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   list-style: none;
   padding: 0.5rem 0;
-  margin: 0 0 10px 0;
+  margin: 10px 0 0 0;
   box-shadow: var(--shadow-hover);
+  max-height: 60vh; /* Prevent overflow on small screens */
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: bottom center;
+  transform-origin: top center;
+  z-index: 1001;
 }
 
 .submenu:not([hidden]) {
@@ -262,13 +261,15 @@ body {
 /* Contact Bar (Mobile: Scrollable Row) */
 .contact-bar { 
   display: flex; 
-  overflow-x: auto;
+  overflow-x: visible; /* Changed from auto to visible to allow dropdown overflow */
   gap: 0.6rem; 
   padding: 0.75rem 1rem; 
   background: rgba(255, 255, 255, 0.05); 
   border-bottom: 1px solid var(--glass-border); 
   white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
+  /* -webkit-overflow-scrolling: touch; Removed as we want overflow visible */
+  position: relative;
+  z-index: 90;
 }
 .contact { 
   color: var(--text); 
@@ -910,6 +911,7 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
   align-items: center;
   gap: 0.4rem;
   transition: all 0.2s;
+  position: relative; /* Anchor for dropdown */
 }
 
 .more-toggle:hover, .more-toggle[aria-expanded="true"] {
@@ -926,22 +928,48 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
   transform: rotate(180deg);
 }
 
-/* Social Group Animation */
+/* Social Group Animation - Dropdown Style */
 .social-group {
   display: flex;
-  gap: 0.6rem;
+  flex-direction: column; /* Vertical list */
+  gap: 0.2rem;
   opacity: 0;
-  width: 0;
-  overflow: hidden;
-  transition: opacity 0.3s, width 0.3s ease-out;
+  visibility: hidden;
+  position: absolute;
+  top: 100%;
+  right: 1rem; /* Align to right side */
+  margin-top: 0.5rem;
+  background: rgba(17, 24, 39, 0.98);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 0.5rem;
+  min-width: 180px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  transform: translateY(-10px);
+  transition: opacity 0.2s, transform 0.2s ease, visibility 0.2s;
   pointer-events: none;
+  z-index: 100;
+  width: auto;
+  overflow: visible;
+}
+
+.social-group .contact {
+  width: 100%;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  justify-content: flex-start;
+}
+
+.social-group .contact:hover {
+  background: var(--glass-bg-hover);
 }
 
 .social-group:not([hidden]) {
   opacity: 1;
-  width: auto; /* Expands to fit content */
+  visibility: visible;
   pointer-events: auto;
-  overflow: visible;
+  transform: translateY(0);
 }
 
 /* Desktop Enhancements (Media Queries) */
@@ -953,10 +981,26 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
 
   .social-group {
     display: flex;
+    flex-direction: row; /* Reset from column */
     opacity: 1;
+    visibility: visible;
     width: auto;
     overflow: visible;
     pointer-events: auto;
+    position: static;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    transform: none;
+    min-width: 0;
+  }
+  
+  .social-group .contact {
+    width: auto;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
   }
   
   .site-nav { 
@@ -998,6 +1042,47 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
     justify-content: space-between;
   }
 
+  /* Fix Submenu for Desktop: Open Downward */
+  .submenu {
+    bottom: auto;
+    top: 100%;
+    transform: translateX(-50%) translateY(-10px); /* Start slightly above */
+    transform-origin: top center;
+    margin: 10px 0 0 0;
+    
+    /* Ensure it behaves as a dropdown */
+    position: absolute;
+    width: 200px;
+    background: rgba(17, 24, 39, 0.98);
+    border: 1px solid var(--glass-border);
+    padding: 0.5rem 0;
+    display: block;
+  }
+
+  .submenu:not([hidden]) {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Auto-show on hover for Desktop */
+  .nav-item:hover .submenu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  
+  /* Reset submenu items to vertical list */
+  .submenu li {
+    display: block;
+  }
+  
+  .submenu-link {
+    margin: 0;
+    display: flex;
+  }
+
   .search { flex: 1; max-width: 500px; }
   
   .settings-grid {
@@ -1008,63 +1093,4 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
   .grid-cards {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
-
-  /* Desktop Navigation: Flatten Submenus */
-  .has-submenu {
-    display: flex;
-    align-items: center;
-  }
-
-  /* Hide the "Search" trigger button on desktop */
-  .search-toggle {
-    display: none;
-  }
-
-  /* Expand the submenu items inline */
-  .submenu {
-    position: static;
-    display: flex;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    width: auto;
-    margin: 0;
-    padding: 0;
-    gap: 0; /* Items have their own margin/padding */
-  }
-
-  .submenu:not([hidden]) {
-    transform: none;
-  }
-
-  /* Style submenu items to match top-level items */
-  .submenu li {
-    display: block;
-  }
-
-  .submenu-link {
-    flex-direction: row; /* Icon beside text */
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 999px;
-    padding: 0.5rem 1.2rem;
-    font-size: 1rem;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 0.5rem; /* Add spacing between items */
-    transition: all 0.2s;
-  }
-
-  .submenu-link:hover {
-    background: var(--glass-bg-hover);
-    border-color: var(--text-secondary);
-    color: var(--text-secondary);
-  }
-
-  .chevron-icon { display: none; } /* Hide chevron since parent is hidden */
 }
