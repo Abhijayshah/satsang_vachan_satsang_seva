@@ -1040,6 +1040,14 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
     box-shadow: none; /* Remove bottom shadow */
   }
 
+  .nav-list {
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    width: 100%;
+    max-width: 1200px;
+  }
+
   .nav-link {
     flex-direction: row; /* Icon beside text */
     background: var(--glass-bg);
@@ -1069,46 +1077,69 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
     justify-content: space-between;
   }
 
-  /* Fix Submenu for Desktop: Open Downward */
-  .submenu {
-    bottom: auto;
-    top: 100%;
-    transform: translateX(-50%) translateY(-10px); /* Start slightly above */
-    transform-origin: top center;
-    margin: 10px 0 0 0;
-    
-    /* Ensure it behaves as a dropdown */
-    position: absolute;
-    width: 200px;
-    background: rgba(17, 24, 39, 0.98);
-    border: 1px solid var(--glass-border);
-    padding: 0.5rem 0;
-    display: block;
+  /* Flatten Submenu for Desktop: Inline Horizontal */
+  .nav-item.has-submenu {
+    display: contents; /* Removes the wrapping LI from layout */
   }
 
-  .submenu:not([hidden]) {
-    transform: translateX(-50%) translateY(0);
+  /* Hide the Search Toggle Button completely on Desktop */
+  .nav-item.has-submenu > .search-toggle {
+    display: none;
+  }
+  
+  .search-toggle .chevron-icon {
+    display: none; /* Hide chevron */
+  }
+
+  /* Force display contents even if hidden attribute is present */
+  .submenu, .submenu[hidden] {
+    display: contents !important; /* Removes the wrapping UL from layout and forces visibility */
+    position: static;
+    transform: none;
     opacity: 1;
     visibility: visible;
-  }
-  
-  /* Auto-show on hover for Desktop */
-  .nav-item:hover .submenu {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-  }
-  
-  /* Reset submenu items to vertical list */
-  .submenu li {
-    display: block;
-  }
-  
-  .submenu-link {
+    pointer-events: auto;
+    /* Reset dropdown styles */
+    background: transparent;
+    border: none;
+    padding: 0;
     margin: 0;
-    display: flex;
+    box-shadow: none;
+    width: auto;
   }
+
+  /* Reset submenu items to act as flex items of nav-list */
+  .submenu li {
+    display: block; /* or flex item default */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Style submenu links to match top-level nav links */
+  .submenu-link {
+    flex-direction: row; /* Icon beside text */
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    transition: color 0.2s;
+    margin: 0;
+  }
+  
+  .submenu-link:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+  }
+  
+  .submenu-link .nav-icon { width: 1.2em; height: 1.2em; }
 
   .search { flex: 1; max-width: 500px; }
   
