@@ -34,16 +34,12 @@ function initContact(){
 function initNavigation(){
   const toggle=document.querySelector('.search-toggle');
   const submenu=document.getElementById('search-submenu');
-  const header=document.querySelector('.site-header');
   
   if(!toggle||!submenu)return;
-  
-  const isDesktop = () => window.innerWidth >= 768;
   
   const closeMenu=()=>{
     toggle.setAttribute('aria-expanded','false');
     submenu.hidden=true;
-    if(header) header.style.marginBottom = '';
   };
   
   const toggleMenu=(e)=>{
@@ -51,17 +47,6 @@ function initNavigation(){
     const expanded=toggle.getAttribute('aria-expanded')==='true';
     toggle.setAttribute('aria-expanded',String(!expanded));
     submenu.hidden=expanded;
-    
-    // Mobile: Push content by increasing header margin
-    if(!expanded && !isDesktop() && header){
-      // Need to wait for display to be block to measure height
-      setTimeout(()=>{
-        const height = submenu.offsetHeight;
-        header.style.marginBottom = (height + 20) + 'px'; // +20 for some breathing room
-      }, 10);
-    } else if(header) {
-      header.style.marginBottom = '';
-    }
   };
   
   toggle.addEventListener('click',toggleMenu);
@@ -74,13 +59,6 @@ function initNavigation(){
   
   document.addEventListener('keydown',(e)=>{
     if(e.key==='Escape')closeMenu();
-  });
-  
-  // Reset on resize
-  window.addEventListener('resize', ()=>{
-    if(isDesktop()) {
-      if(header) header.style.marginBottom = '';
-    }
   });
 }
 function initActiveNav(){const path=window.location.pathname.replace(/\/index\.html$/,'').replace(/\/$/,'');const links=document.querySelectorAll('.nav-link');links.forEach(l=>{const hrefPath=new URL(l.href,window.location.origin).pathname.replace(/\/index\.html$/,'').replace(/\/$/,'');if(path===hrefPath||(hrefPath!=='/'&&path.startsWith(hrefPath+'/'))){l.classList.add('active')}})}

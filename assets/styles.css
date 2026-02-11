@@ -138,12 +138,24 @@ body {
 .site-header { 
   border-bottom: 1px solid var(--glass-border); 
   padding: 1rem 1rem 0.5rem; 
-  background: rgba(17, 24, 39, 0.7); 
-  backdrop-filter: blur(var(--backdrop-blur));
+  /* background & backdrop-filter moved to ::before to prevent containing block for fixed nav */
   position: sticky;
   top: 0;
   z-index: 100;
   transition: margin-bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(var(--backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--backdrop-blur));
+  z-index: -1;
 }
 .brand { text-align: center; }
 .brand-line { font-weight: 800; letter-spacing: 0.5px; }
@@ -151,15 +163,20 @@ body {
 .brand-line-2 { font-size: var(--brand-second); color: var(--text); }
 .brand-line-3 { font-size: var(--brand-third); color: var(--text-secondary); }
 
-/* Navigation System (Mobile First) */
+/* Navigation System (Mobile First - Bottom Tab Bar) */
 .site-nav { 
-  /* Moved to top naturally as it is inside header */
-  /* position: fixed; bottom: 0; removed to allow natural top flow */
-  background: transparent; 
-  /* backdrop-filter handled by header */
-  padding: 0.5rem 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(17, 24, 39, 0.95); 
+  backdrop-filter: blur(var(--backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--backdrop-blur));
+  border-top: 1px solid var(--glass-border);
+  padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom)) 0.5rem; /* Safe area for iPhone X+ */
   z-index: 1000;
   display: block;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2); /* Elevated look */
 }
 
 .nav-list {
@@ -210,27 +227,27 @@ body {
 
 .chevron-icon { display: none; } /* Hide chevron on mobile nav */
 
-/* Submenu (Mobile: Expands Downwards) */
+/* Submenu (Mobile: Expands Upwards from Bottom Nav) */
 .submenu {
   position: absolute;
-  top: 100%; /* Changed from bottom: 100% to top: 100% */
-  bottom: auto;
+  bottom: 100%;
+  top: auto;
   left: 50%;
-  transform: translateX(-50%) translateY(-10px);
+  transform: translateX(-50%) translateY(10px);
   width: 200px;
   background: rgba(17, 24, 39, 0.98);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   list-style: none;
   padding: 0.5rem 0;
-  margin: 10px 0 0 0;
+  margin: 0 0 10px 0;
   box-shadow: var(--shadow-hover);
   max-height: 60vh; /* Prevent overflow on small screens */
   overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease, visibility 0.2s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: top center;
+  transform-origin: bottom center;
   z-index: 1001;
 }
 
@@ -1005,7 +1022,9 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
   }
   
   .site-nav { 
-    position: static; 
+    position: sticky; /* Back to top */
+    top: 0;
+    bottom: auto;
     background: transparent;
     border-top: none;
     padding: 0.5rem 0 1rem;
