@@ -1,71 +1,158 @@
-Satsang Vachan Satsang Seva — Weekly Patrika
+# Jay Guru Dev - Satsang Vachan Satsang Seva
 
-Overview
-- Newspaper-style static site for the weekly patrika in Hindi.
-- Mobile-first, fast interactions, and accessible focus outlines.
-- Contact CTA with WhatsApp message choices for direct communication.
+![Project Status](https://img.shields.io/badge/status-active-success.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Tech Stack](https://img.shields.io/badge/tech-HTML%20%7C%20CSS%20%7C%20JS-yellow.svg)
 
-Key Features
-- Three-line Hindi masthead with responsive typography `index.html:16-20`.
-- Button-style navigation and contact chips `assets/styles.css:22-30`.
-- Client-side search with inline highlight `index.html:37-40`, `assets/script.js:12`.
-- Hindi/English content blocks per card; titles are Hindi-only `index.html:75-99`.
-- Text-to-Speech with voice rate/pitch and selectable voices `index.html:47-71`, `assets/script.js:1-6,14`.
-- YouTube lazy preview: thumbnail first, iframe on tap `index.html:80`, `assets/script.js:8-10`.
-- Diagnostics page to detect naming/asset issues `diagnostics.html:1-108`.
-- Contact buttons wired to YouTube, Instagram, Email, and WhatsApp `index.html:28-34,126-132`.
+**Jay Guru Dev - Shakahari Sadachari Bal Sangh - Balak Saptahik Patrika** is a spiritual web platform dedicated to sharing the teachings of Baba Jai Gurudev. It serves as a digital "Patrika" (magazine) offering bilingual spiritual articles, satsang videos, and resources for millions of followers worldwide.
 
-Getting Started
-1) Run locally
-- Python: `python3 -m http.server 8000`
-- Visit `http://localhost:8000/`
+## 📖 Project Overview
 
-2) Project structure
-- `index.html` — Homepage and links to patrika items.
-- `issues/index.html` — Index listing for patrika entries.
-- `issues/2025-11-24/index.html` — Example patrika page.
-- `assets/styles.css` — Global styles, responsive layout, button chips.
-- `assets/script.js` — Search, TTS, media lazy-load, contact WhatsApp choices.
-- `assets/config.js` — Client config placeholder.
-- `diagnostics.html` — Project checks for naming and asset references.
+This project is a modern, high-performance static website built to deliver spiritual content effectively across all devices. It features a devotional "Glassmorphism" aesthetic, seamless bilingual support (Hindi/English), and accessibility tools like Text-to-Speech.
 
-Content & Media
-- Add cards on the homepage in `index.html:74-116`.
-- To embed a video, set `data-youtube-id` on `.media` `index.html:80`.
-- English text blocks are optional; titles remain Hindi-only.
+**Target Audience:** Devotees, spiritual seekers, and the vegetarian community.
 
-Create a New Patrika Page
-1) Copy the example `issues/2025-11-24/index.html` to `issues/YYYY-MM-DD/index.html`.
-2) Edit the masthead and card content as needed `issues/2025-11-24/index.html:12-71`.
-3) Link it from the homepage list `index.html:118-123` or `issues/index.html:21-26`.
+---
 
-Contacts & CTA
-- Header contact chips `index.html:28-34`:
-  - YouTube Channel → `https://www.youtube.com/channel/UCEMWkI5hw0oLnaFJAwCMECg`
-  - Instagram → `https://www.instagram.com/satsang_vachan_satsang_seva/`
-  - Email → `mailto:abhijayshah74@gmail.com`
-  - Contact (WhatsApp) → `https://wa.me/917879028316`
-- The WhatsApp “Contact” opens a selection panel with preset messages `assets/script.js:14-16`.
-  - Edit choices in the `opts` array inside `openContactMenu` to customize.
+## 🛠 Tech Stack
 
-Diagnostics
-- Visit `http://localhost:8000/diagnostics.html` after changes.
-- Reports:
-  - Pages missing “Patrika” in titles.
-  - Legacy text: “Daily Patrika” vs “Daily Issues”, and “Patrika YYYY-MM-DD” vs “Issue YYYY-MM-DD”.
-  - Missing styles/scripts and image `alt`.
+The project adheres to a "Vanilla" philosophy for maximum performance, longevity, and ease of maintenance.
 
-Accessibility & UX
-- Large touch targets and pill buttons for nav/contact chips.
-- `focus-visible` outlines for keyboard users `assets/styles.css:38`.
-- Prevent unwanted auto-translation for masthead with `translate="no"` and `notranslate` meta `index.html:6,16`.
+*   **Frontend:** HTML5, CSS3, JavaScript (ES6+)
+*   **Styling:** Custom CSS with CSS Variables, Flexbox, Grid, and Glassmorphism effects.
+*   **Logic:** Pure Vanilla JS (No frameworks like React or Vue).
+*   **Build Tools:** Python 3 (for static content generation).
+*   **Deployment:** GitHub Pages (Custom Domain: [satsangvachansatsangseva.online](http://satsangvachansatsangseva.online)).
 
-Deployment (GitHub Pages)
-1) Push repository to GitHub.
-2) Repository → Settings → Pages → choose branch (`main` or `gh-pages`) and root.
-3) Visit `https://<username>.github.io/<repo>/`.
+---
 
-Notes
-- Use `Noto Sans Devanagari` for consistent Hindi typography `index.html:11`, `assets/styles.css:13`.
-- TTS quality depends on the user’s browser; for higher fidelity, consider server-side TTS.
-- YouTube preview thumbnails auto-generate from the video ID.
+## 📂 Folder Structure
+
+```
+satsang_vachan_satsang_seva/
+├── assets/                 # Static assets
+│   ├── styles.css          # Global styles, variables, and themes
+│   └── script.js           # Core application logic (UI, TTS, Media)
+├── content/                # Raw content source
+│   ├── input.md            # Markdown source for new issues
+│   └── video_script.md     # Video production scripts
+├── issues/                 # Generated static pages
+│   ├── index.html          # Archive/Listing of all issues
+│   └── [date]/index.html   # Individual issue pages
+├── tools/                  # Automation scripts
+│   └── generate_issue.py   # Python script to compile MD -> HTML
+├── index.html              # Main Landing Page
+├── videos.html             # Dedicated Video Gallery
+├── latestUpdate.md         # Changelog and update tracking
+├── project_structure.md    # Detailed documentation of file relationships
+└── CNAME                   # Custom domain configuration
+```
+
+---
+
+## ✨ Key Features
+
+*   **🎨 Devotional Glassmorphism UI:** A serene, modern interface featuring deep purple gradients, gold accents, and frosted glass effects to create a spiritual ambiance.
+*   **🇮🇳/🇬🇧 Bilingual Toggle:** Instantly switch content visibility between Hindi and English or view both side-by-side.
+*   **🗣️ Text-to-Speech (TTS):** Integrated Web Speech API reader with customizable rate, pitch, and voice selection for accessibility.
+*   **🎥 Optimized Video Player:** Custom-built YouTube embeds with:
+    *   Lazy loading (thumbnail first).
+    *   Auto-pause logic (stops other videos when one plays).
+    *   JSON-LD VideoObject Schema injection for SEO.
+    *   Devotional "Play" button styling.
+*   **⚡ High Performance:**
+    *   Zero external JS dependencies.
+    *   Lazy loading for all images and iframes.
+    *   Minimal DOM footprint.
+*   **🔍 Instant Search:** Client-side real-time search with text highlighting.
+*   **📱 Fully Responsive:** "Mobile-First" design using CSS Grid/Flexbox to ensure perfect rendering on phones, tablets, and desktops.
+
+---
+
+## 🚀 Setup & Local Development
+
+Since this is a static site, setup is incredibly simple.
+
+### Prerequisites
+*   A modern web browser (Chrome, Firefox, Edge, Safari).
+*   (Optional) Python 3.x if you intend to generate new issue pages.
+
+### Running Locally
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/YourUsername/satsang_vachan_satsang_seva.git
+    cd satsang_vachan_satsang_seva
+    ```
+2.  **Serve the files:**
+    *   **VS Code:** Install the "Live Server" extension and click "Go Live".
+    *   **Python:** Run `python3 -m http.server 8000` and open `http://localhost:8000`.
+
+### Generating New Content
+To create a new "Patrika" issue from Markdown:
+1.  Edit `content/input.md` with your article content (supports custom tags like `[body_hi]`, `[body_en]`).
+2.  Run the generator script:
+    ```bash
+    python3 tools/generate_issue.py
+    ```
+3.  The new HTML page will be generated in the `issues/` directory.
+
+---
+
+## 🌐 Deployment
+
+The site is configured for **GitHub Pages**.
+
+*   **Branch:** `main`
+*   **Custom Domain:** `satsangvachansatsangseva.online`
+*   **Configuration:** The `CNAME` file in the root ensures traffic is correctly routed.
+
+To deploy changes, simply push to the `main` branch:
+```bash
+git add .
+git commit -m "Update content"
+git push origin main
+```
+
+---
+
+## ⚡ Performance & Best Practices
+
+*   **SEO:** Extensive use of Semantic HTML (`<article>`, `<section>`, `<nav>`), Meta tags, and JSON-LD Structured Data for videos.
+*   **Accessibility:** ARIA labels for interactive elements, keyboard navigation support, and high-contrast text.
+*   **Efficiency:**
+    *   `loading="lazy"` on all media.
+    *   Debounced search input to prevent layout thrashing.
+    *   Event delegation for handling dynamic content.
+
+---
+
+## 🔮 Future Improvements
+
+*   [ ] **PWA Support:** Add a Service Worker and Manifest for offline reading.
+*   [ ] **Backend Integration:** Transition to a CMS for easier content management without Git.
+*   [ ] **Newsletter:** Email subscription integration.
+*   [ ] **Dark/Light Mode:** Toggle for reading preference (currently optimized for Dark Devotional theme).
+
+---
+
+## 🤝 Contribution Guidelines
+
+Contributions are welcome! Please follow these steps:
+1.  Fork the repository.
+2.  Create a feature branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+  <b>Jay Guru Dev</b><br>
+  <i>Spiritual inspiration for a better life.</i>
+</div>

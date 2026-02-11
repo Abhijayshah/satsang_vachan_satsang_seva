@@ -12,25 +12,129 @@
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
+    <div class="ambient-bg" aria-hidden="true">
+      <div class="ambient-orb orb-1"></div>
+      <div class="ambient-orb orb-2"></div>
+      <div class="ambient-orb orb-3"></div>
+    </div>
     <header class="site-header">
       <div class="brand" translate="no">
         <div class="brand-line brand-line-1">जय गुरुदेव</div>
         <div class="brand-line brand-line-2">शाकाहारी सदाचारी बाल संघ</div>
         <div class="brand-line brand-line-3">बालक सप्ताहिक पत्रिका</div>
       </div>
-      <nav class="site-nav">
-        <a href="index.html" aria-label="Home">Home</a>
-        <a href="issues/index.html" aria-label="All Patrika">Patrika</a>
-        <a href="#search" aria-label="Search">Search</a>
+      <nav class="site-nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="about/" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              About
+            </a>
+          </li>
+          <li class="nav-item has-submenu">
+            <button class="nav-link search-toggle" aria-expanded="false" aria-controls="search-submenu">
+              <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              Search <span class="chevron-icon" aria-hidden="true"></span>
+            </button>
+            <ul id="search-submenu" class="submenu" hidden>
+              <li>
+                <a href="satsang/" class="submenu-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  Satsang
+                </a>
+              </li>
+              <li>
+                <a href="podcast/" class="submenu-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                  Podcast
+                </a>
+              </li>
+              <li>
+                <a href="music/" class="submenu-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                  Music
+                </a>
+              </li>
+              <li>
+                <a href="bhajan/" class="submenu-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7 3 9 3 9h6s3-2 3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                  Bhajan
+                </a>
+              </li>
+              <li>
+                <a href="patrika/" class="submenu-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  Patrika
+                </a>
+              </li>
+              <li>
+                <a href="book/" class="submenu-link">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                  Book
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="contact/" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              Contact
+            </a>
+          </li>
+        </ul>
       </nav>
     </header>
 
   <section class="contact-bar" aria-label="Official Contacts">
       <a class="contact contact-cta" href="#">👉 Follow सप्ताहिक पत्रिका</a>
-      <a class="contact" href="https://www.youtube.com/channel/UCsAvsUouGa6g1VSNGhyfO5w" target="_blank" rel="noopener noreferrer">YouTube Channel</a>
-      <a class="contact" href="https://www.instagram.com/satsang_vachan_satsang_seva/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a class="contact" href="mailto:abhijayshah74@gmail.com">Email</a>
-      <a class="contact" href="https://wa.me/917879028316" target="_blank" rel="noopener noreferrer">Contact</a>
+      <a class="contact" href="https://www.youtube.com/channel/UCsAvsUouGa6g1VSNGhyfO5w" target="_blank" rel="noopener noreferrer" aria-label="YouTube Channel">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+        YouTube
+      </a>
+      <a class="contact" href="https://www.instagram.com/satsang_vachan_satsang_seva/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        Instagram
+      </a>
+      
+      <!-- More Button for Mobile -->
+      <button class="contact more-toggle" aria-expanded="false" aria-controls="more-socials">
+        More
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+
+      <!-- Collapsible Section -->
+      <div id="more-socials" class="social-group" hidden>
+        <a class="contact" href="https://www.facebook.com/profile.php?id=61585359857392" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          Facebook
+        </a>
+        <a class="contact" href="https://x.com/satsang_vachan" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg>
+          X / Twitter
+        </a>
+        <a class="contact" href="https://www.linkedin.com/in/satsang-vachan-satsang-seva-9228a53a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          LinkedIn
+        </a>
+        <a class="contact" href="https://github.com/satsangvachansatsangseva" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub
+        </a>
+        <a class="contact" href="mailto:abhijayshah74@gmail.com" aria-label="Email">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Email
+        </a>
+        <a class="contact" href="https://wa.me/917879028316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contact">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Contact
+        </a>
+      </div>
   </section>
 
     <main class="layout">
@@ -73,7 +177,7 @@
 
       <section id="satsang-playlist" class="layout">
         <header style="text-align: center; margin-bottom: 2rem;">
-          <h2 style="font-size: 1.8rem; color: var(--accent-gold); margin: 0;">Jay Guru Dev Satsang Playlist</h2>
+          <h2 style="font-size: 1.8rem; color: var(--accent-gold); margin: 0;">Satsang Vachan Satsang Seva</h2>
           <p style="color: var(--muted); margin-top: 0.5rem;">Watch & Grow Spiritually | आध्यात्मिक प्रेरणा</p>
         </header>
         <div class="video-grid">
@@ -190,66 +294,47 @@
         </div>
       </section>
 
-      <section class="grid">
-        <article class="card" data-topic="प्रेरणा Inspiration">
-          <header class="card-header">
-            <h2 class="title" data-lang="hi">आध्यात्मिक प्रेरणा का संदेश</h2>
-            <div class="meta">Patrika: 2025-11-24 • Category: प्रेरणा</div>
-          </header>
-          <div class="media" data-youtube-id="ui9S0H3UkOk" aria-label="Video"></div>
-          <div class="card-body">
-            <div class="content" data-lang="hi">
-              <p>सदाचार, सत्य, और शाकाहार का मार्ग मन को शान्ति और समाज को एकता देता है।</p>
-              <p>संस्कृत श्लोक: धर्म एव हतो हन्ति धर्मो रक्षति रक्षितः।</p>
-            </div>
-            <div class="content" data-lang="en">
-              <p>The path of virtue, truth, and vegetarianism brings peace to the mind and unity to society.</p>
-              <p>Sanskrit verse: dharma eva hato hanti dharmo rakṣati rakṣitaḥ.</p>
-            </div>
-            <div class="actions">
-              <button class="tts-btn" data-lang="auto">Listen / सुनें</button>
-            </div>
-          </div>
-        </article>
-        
 
-
-        <article class="card" data-topic="समाचार News">
-          <header class="card-header">
-            <h2 class="title" data-lang="hi">साप्ताहिक पत्रिका विशेषांक</h2>
-            <div class="meta">Patrika: 2025-11-24 • Category: समाचार</div>
-          </header>
-          <figure class="media" aria-label="Image"></figure>
-          <div class="card-body">
-            <div class="content" data-lang="hi">
-              <p>इस विशेषांक में गुरुजी के अमूल्य विचारों का संकलन प्रस्तुत है।</p>
-              <p>युवा बाल संघ के लिए नयी प्रेरणाएँ और सन्देश।</p>
-            </div>
-            <div class="content" data-lang="en">
-              <p>This special issue collects invaluable thoughts of Guruji.</p>
-              <p>New inspirations and messages for the youth association.</p>
-            </div>
-            <div class="actions">
-              <button class="tts-btn" data-lang="auto">Listen / सुनें</button>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <section class="issues-links">
-        <h3>Daily Patrika</h3>
-        <ul>
-          <li><a href="issues/2025-11-24/index.html">Patrika 2025-11-24</a></li>
-        </ul>
-      </section>
     </main>
 
     <footer class="site-footer">
       <div class="footer-links">
-        <a href="https://www.youtube.com/channel/UCEMWkI5hw0oLnaFJAwCMECg" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://www.instagram.com/satsang_vachan_satsang_seva/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="mailto:abhijayshah74@gmail.com">Email</a>
-        <a href="https://wa.me/917879028316" target="_blank" rel="noopener noreferrer">Contact</a>
+        <a href="https://www.youtube.com/channel/UCsAvsUouGa6g1VSNGhyfO5w" target="_blank" rel="noopener noreferrer" aria-label="YouTube Channel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+          YouTube
+        </a>
+        <a href="https://www.instagram.com/satsang_vachan_satsang_seva/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          Instagram
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61585359857392" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          Facebook
+        </a>
+        <a href="https://x.com/satsang_vachan" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg>
+          X / Twitter
+        </a>
+        <a href="https://www.linkedin.com/in/satsang-vachan-satsang-seva-9228a53a1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/satsangvachansatsangseva" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub
+        </a>
+        <a href="https://satsangvachansatsangseva.online/" target="_blank" rel="noopener noreferrer" aria-label="Website">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          Website
+        </a>
+        <a href="mailto:abhijayshah74@gmail.com" aria-label="Email">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Email
+        </a>
+        <a href="https://wa.me/917879028316" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contact">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          Contact
+        </a>
       </div>
       <div class="copyright">© 2025 जय गुरुदेव • शाकाहारी सदाचारी बाल संघ • बालक सप्ताहिक पत्रिका</div>
     </footer>

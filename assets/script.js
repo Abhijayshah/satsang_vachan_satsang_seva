@@ -18,6 +18,20 @@ function openContactMenu(href){const backdrop=document.createElement('div');back
   'Hello, I want to join the weekly पत्रिका.',
   'I have a query regarding satsang content.'
 ];opts.forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t;b.addEventListener('click',()=>{const url=href.split('?')[0]+'?text='+encodeURIComponent(t);window.open(url,'_blank');document.body.removeChild(backdrop)});actions.appendChild(b)});const cancel=document.createElement('button');cancel.type='button';cancel.className='cancel';cancel.textContent='Cancel';cancel.addEventListener('click',()=>{document.body.removeChild(backdrop)});actions.appendChild(cancel);panel.appendChild(title);panel.appendChild(actions);backdrop.appendChild(panel);backdrop.addEventListener('click',e=>{if(e.target===backdrop)document.body.removeChild(backdrop)});document.body.appendChild(backdrop)}
-function initContact(){document.querySelectorAll('a.contact').forEach(a=>{const href=a.getAttribute('href')||'';const isWa=href.indexOf('https://wa.me/')===0;const run=(e)=>{if(isWa){e.preventDefault();openContactMenu(href)}};a.addEventListener('pointerdown',run);a.addEventListener('click',run)})}
-function init(){initLangToggle();initTTS();initMedia();initSearch();initSettings()}
+function initContact(){
+  document.querySelectorAll('a.contact').forEach(a=>{const href=a.getAttribute('href')||'';const isWa=href.indexOf('https://wa.me/')===0;const run=(e)=>{if(isWa){e.preventDefault();openContactMenu(href)}};a.addEventListener('pointerdown',run);a.addEventListener('click',run)});
+  
+  const moreBtn=document.querySelector('.more-toggle');
+  const moreGroup=document.getElementById('more-socials');
+  if(moreBtn && moreGroup){
+    moreBtn.addEventListener('click',()=>{
+      const expanded=moreBtn.getAttribute('aria-expanded')==='true';
+      moreBtn.setAttribute('aria-expanded',String(!expanded));
+      moreGroup.hidden=expanded;
+    });
+  }
+}
+function initNavigation(){const toggle=document.querySelector('.search-toggle');const submenu=document.getElementById('search-submenu');if(!toggle||!submenu)return;const closeMenu=()=>{toggle.setAttribute('aria-expanded','false');submenu.hidden=true};const toggleMenu=(e)=>{e.stopPropagation();const expanded=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!expanded));submenu.hidden=expanded};toggle.addEventListener('click',toggleMenu);document.addEventListener('click',(e)=>{if(!toggle.contains(e.target)&&!submenu.contains(e.target)){closeMenu()}});document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeMenu()})}
+function initActiveNav(){const path=window.location.pathname.replace(/\/index\.html$/,'').replace(/\/$/,'');const links=document.querySelectorAll('.nav-link');links.forEach(l=>{const hrefPath=new URL(l.href,window.location.origin).pathname.replace(/\/index\.html$/,'').replace(/\/$/,'');if(path===hrefPath||(hrefPath!=='/'&&path.startsWith(hrefPath+'/'))){l.classList.add('active')}})}
+function init(){initLangToggle();initTTS();initMedia();initSearch();initSettings();initNavigation();initActiveNav()}
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>{init();initContact()})}else{init();initContact()}
