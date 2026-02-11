@@ -920,6 +920,12 @@ a[href^="mailto"]:hover { background: rgba(255, 149, 0, 0.15); color: var(--emai
     background: var(--glass-bg);
     border-color: var(--glass-border);
   }
+
+  .copyright {
+    text-align: center;
+    margin: 1rem auto 0;
+    width: 100%;
+  }
 }
 
   /* More Button Logic */
